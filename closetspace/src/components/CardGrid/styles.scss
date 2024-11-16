@@ -1,0 +1,11 @@
+.cardgrid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    width: 100%;
+    grid-template-rows: max-content;
+    grid-gap: 50px 32px;
+    padding: 50px;
+    align-items: start;
+    transition: all 1s ease;
+    overflow-y: scroll;
+}

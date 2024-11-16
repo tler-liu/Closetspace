@@ -1,0 +1,17 @@
+.card-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Inter, sans-serif;
+    gap: 8px;
+    // flex: 1 1 0px;
+    transition: all 1s ease;
+}
+
+.card-img {
+    //max-width: 200px;
+    max-width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: scale-down;
+}

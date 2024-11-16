@@ -1,0 +1,16 @@
+.nav-item-container {
+    display: flex;
+    padding: 16px;
+    border-radius: 6px;
+    // color: rgba(256, 256, 256, 0.90);
+    // min-width: 200px;
+
+    &:hover {
+        background-color: #f6fbff;
+        cursor: pointer;
+    }
+
+    &.selected {
+        background-color: #f6fbff;
+    }
+}
