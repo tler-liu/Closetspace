@@ -1,0 +1,20 @@
+@import "./components/NavItem/styles";
+
+.sidenav-wrapper {
+    width: 350px;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 16px 8px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f3f1f1;
+
+    .logo {
+        font-family: Inter, sans-serif;
+        padding: 16px 0px 32px 8px;
+        margin: 0;
+        font-size: 22px;
+    }
+    
+}
+
