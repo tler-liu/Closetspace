@@ -1,0 +1,50 @@
+.upload-card-wrapper {
+    // max-height: 150px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding: 12px;
+    border: 1px solid black;
+    border-radius: 6px;
+
+    img {
+        height: 130px;
+        width: 110px;
+        object-fit: cover;
+    }
+
+    .fields-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .text-input {
+        border: 1px solid gray;
+        border-radius: 6px;
+        width: 100%;
+        box-sizing: border-box;
+        outline: none;
+        height: 32px;
+        padding: 8px;
+    }
+
+    .input-label {
+        font-size: 14px;
+    }
+
+    .image-box {
+        width: min-content;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        .remove-btn {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
+}

@@ -1,92 +1,137 @@
-// import Image from 'next/image'
-import { useCallback, useEffect, useState } from 'react'
-import { useDropzone } from 'react-dropzone'
-// import { ArrowUpTrayIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { useCallback, useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import UploadCard from "../UploadCard";
+import Upload from "../../pages/Upload";
+import { Image } from "cloudinary-react";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../config/firestore";
 
-const Dropzone = ({ className }) => {
-  const [files, setFiles] = useState([])
-  const [rejected, setRejected] = useState([])
+const Dropzone = ({ className, getClothingItems }) => {
+    const [files, setFiles] = useState([]);
+    const [rejected, setRejected] = useState([]);
 
-  const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
-    if (acceptedFiles?.length) {
-      setFiles(previousFiles => [
-        ...previousFiles,
-        ...acceptedFiles.map(file =>
-          Object.assign(file, { preview: URL.createObjectURL(file) })
-        )
-      ])
-    }
+    const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+        if (acceptedFiles?.length) {
+            setFiles((previousFiles) => [
+                ...previousFiles,
+                ...acceptedFiles.map((file) =>
+                    Object.assign(file, { preview: URL.createObjectURL(file) })
+                ),
+            ]);
+        }
 
-    if (rejectedFiles?.length) {
-      setRejected(previousFiles => [...previousFiles, ...rejectedFiles])
-    }
-  }, [])
+        if (rejectedFiles?.length) {
+            setRejected((previousFiles) => [
+                ...previousFiles,
+                ...rejectedFiles,
+            ]);
+        }
+    }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: {
-      'image/*': []
-    },
-    maxSize: 1024 * 1000,
-    onDrop
-  })
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        accept: {
+            "image/*": [],
+        },
+        // maxSize: 1024 * 1000,
+        onDrop,
+    });
 
-  useEffect(() => {
-    // Revoke the data uris to avoid memory leaks
-    return () => files.forEach(file => URL.revokeObjectURL(file.preview))
-  }, [files])
+    useEffect(() => {
+        // Revoke the data uris to avoid memory leaks
+        return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+    }, [files]);
 
-  const removeFile = name => {
-    setFiles(files => files.filter(file => file.name !== name))
-  }
+    const removeFile = (name) => {
+        setFiles((files) => files.filter((file) => file.name !== name));
+    };
 
-  const removeAll = () => {
-    setFiles([])
-    setRejected([])
-  }
+    const removeAll = () => {
+        setFiles([]);
+        setRejected([]);
+    };
 
-  const removeRejected = name => {
-    setRejected(files => files.filter(({ file }) => file.name !== name))
-  }
+    const updateFileMetadata = (fileName, newData) => {
+        setFiles((prevFiles) => {
+            const updateFiles = prevFiles.map((file) =>
+                file.name === fileName ? Object.assign(file, newData) : file
+            );
+            console.log(updateFiles)
+            return updateFiles;
+        });
+    };
 
-  const handleSubmit = async e => {
-    e.preventDefault()
+    const uploadFile = async (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "closetspace");
+        const URL = process.env.REACT_APP_CLOUDINARY_URL;
+        try {
+            const data = await fetch(URL, {
+                method: "POST",
+                body: formData,
+            }).then((res) => res.json());
 
-    if (!files?.length) return
+            const { secure_url } = data;
+            const docRef = await addDoc(collection(db, "clothing_items"), {
+                name: file.display_name || "",
+                secure_url: secure_url,
+            });
 
-    const formData = new FormData()
-    files.forEach(file => formData.append('file', file))
-    formData.append('upload_preset', 'friendsbook')
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-    const URL = process.env.NEXT_PUBLIC_CLOUDINARY_URL
-    const data = await fetch(URL, {
-      method: 'POST',
-      body: formData
-    }).then(res => res.json())
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    console.log(data)
-  }
+        if (!files?.length) return;
 
-console.log(className);
+        const uploadPromises = files.map((file) => uploadFile(file));
+        const results = await Promise.all(uploadPromises);
+        console.log(results);
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div
-        {...getRootProps({
-          className: className
-        })}
-      >
-        <input {...getInputProps()} />
-        <div className='flex flex-col items-center justify-center gap-4'>
-          {/* <ArrowUpTrayIcon className='w-5 h-5 fill-current' /> */}
-          {isDragActive ? (
-            <p>Drop the files here ...</p>
-          ) : (
-            <p>Drag & drop files here, or click to select files</p>
-          )}
+        getClothingItems();
+        removeAll();
+    };
+
+    return (
+        <div className="dropzone-page-wrapper">
+            <div
+                {...getRootProps({
+                    className: className,
+                })}
+            >
+                <input {...getInputProps()} />
+                <div className="flex flex-col items-center justify-center gap-4">
+                    {isDragActive ? (
+                        <p>Drop the photos here ...</p>
+                    ) : (
+                        <p>
+                            Drag & drop photos here, or click to select photos
+                        </p>
+                    )}
+                </div>
+            </div>
+            <h3>Added Items</h3>
+            <div className="accepted-container">
+                {files.map((file) => {
+                    return (
+                        <UploadCard
+                            key={file.name}
+                            file={file}
+                            removeFn={removeFile}
+                            updateFileMetadata={updateFileMetadata}
+                        />
+                    );
+                })}
+            </div>
+            <button className="upload-btn" onClick={handleSubmit}>{`Upload ${
+                files.length
+            } item${files.length == 1 ? "" : "s"}`}</button>
         </div>
-      </div>
-    </form>
-  )
-}
+    );
+};
 
-export default Dropzone
+export default Dropzone;
