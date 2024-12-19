@@ -1,6 +1,19 @@
+.dropzone-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    h3 {
+        margin: 0;
+        padding: 0;
+    }
+}
+
 .dropzone-container {
-    width: 500px;
-    height: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 300px;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,4 +22,43 @@
     border-radius: 16px;
 
     font-family: Inter, sans-serif;
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.accepted-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 460px;
+    overflow-y: scroll;
+    // padding: 12px;
+
+    .dropzone-item {
+        position: relative;
+
+        // .remove-btn {
+        //     position: absolute;
+        //     top: -5px;
+        //     right: -5px;
+        //     // top: 0;
+        //     // right: 0;
+        //     // transform: translate(50%, -50%);
+        // }
+    }
+}
+
+.upload-btn {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #959595;
+    border: none;
+    border-radius: 6px;
+    height: 46px;
+    cursor: pointer;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
 }

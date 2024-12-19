@@ -1,9 +1,12 @@
 import Dropzone from "../components/Dropzone";
 
-const Upload = () => {
+const Upload = ({ getClothingItems }) => {
     return (
-        <div style={{ margin: "100px" }}>
-            <Dropzone className="dropzone-container" />
+        <div className="upload-page">
+            <Dropzone
+                className="dropzone-container"
+                getClothingItems={getClothingItems}
+            />
         </div>
     );
 };
