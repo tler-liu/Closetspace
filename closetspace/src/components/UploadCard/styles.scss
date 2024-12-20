@@ -10,8 +10,11 @@
     border-radius: 6px;
 
     img {
-        height: 130px;
-        width: 110px;
+        // height: 130px;
+        // width: 110px;
+        height: 180px;
+        aspect-ratio: 1/1;
+
         object-fit: cover;
     }
 

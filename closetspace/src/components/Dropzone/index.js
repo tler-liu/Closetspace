@@ -55,7 +55,7 @@ const Dropzone = ({ className, getClothingItems }) => {
             const updateFiles = prevFiles.map((file) =>
                 file.name === fileName ? Object.assign(file, newData) : file
             );
-            console.log(updateFiles)
+            console.log(updateFiles);
             return updateFiles;
         });
     };
@@ -71,10 +71,12 @@ const Dropzone = ({ className, getClothingItems }) => {
                 body: formData,
             }).then((res) => res.json());
 
-            const { secure_url } = data;
+            const { secure_url, public_id } = data;
             const docRef = await addDoc(collection(db, "clothing_items"), {
                 name: file.display_name || "",
                 secure_url: secure_url,
+                public_id: public_id,
+                brand: file.brand || "",
             });
 
             return data;
