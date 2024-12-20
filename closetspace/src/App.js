@@ -35,7 +35,7 @@ function App() {
         <div className="App">
             <SideNav
                 navItems={[
-                    { label: "All", linkTo: "/" },
+                    { label: "Home", linkTo: "/" },
                     { label: "Add to Closet", linkTo: "/upload" },
                 ]}
             />

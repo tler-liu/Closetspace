@@ -19,6 +19,7 @@ const Input = ({
             autoFocus={autoFocus}
             onBlur={onFocusOutFn}
             style={style}
+            spellCheck={false}
         />
     );
 };

@@ -24,10 +24,17 @@
         gap: 12px;
         width: 100%;
         box-sizing: border-box;
+
+        .field-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
     }
 
     .input-label {
         font-size: 14px;
+        font-weight: 500;
     }
 
     .image-box {

@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import UploadCard from "../UploadCard";
-import Upload from "../../pages/Upload";
-import { Image } from "cloudinary-react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../config/firestore";
+import Button from "../Button";
 
 const Dropzone = ({ className, getClothingItems }) => {
     const [files, setFiles] = useState([]);
@@ -129,9 +128,14 @@ const Dropzone = ({ className, getClothingItems }) => {
                     );
                 })}
             </div>
-            <button className="upload-btn" onClick={handleSubmit}>{`Upload ${
-                files.length
-            } item${files.length == 1 ? "" : "s"}`}</button>
+            <Button
+                label={`Upload ${files.length} item${
+                    files.length == 1 ? "" : "s"
+                }`}
+                size="medium"
+                variant="create"
+                onClickFn={handleSubmit}
+            />
         </div>
     );
 };
