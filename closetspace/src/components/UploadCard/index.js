@@ -6,41 +6,32 @@ const UploadCard = ({ file, removeFn, updateFileMetadata }) => {
         <div className="upload-card-wrapper">
             <div className="image-box">
                 <img src={file.preview} />
-                {/* <button
-                    className="remove-btn"
-                    onClick={() => {
-                        removeFn(file.name);
-                    }}
-                >
-                    Remove
-                </button> */}
             </div>
-
             <div className="fields-container">
                 <div>
                     <label className="input-label">Name</label>
-                    <input
-                        className="text-input"
+                    <Input
                         placeholder="Name..."
-                        onInput={(e) => {
+                        onInputFn={(e) => {
                             let newMetadata = {
                                 display_name: e.target.value,
                             };
                             updateFileMetadata(file.name, newMetadata);
                         }}
+                        autoFocus={false}
                     />
                 </div>
                 <div>
                     <label className="input-label">Brand</label>
-                    <input
-                        className="text-input"
+                    <Input
                         placeholder="Brand..."
-                        onInput={(e) => {
+                        onInputFn={(e) => {
                             let newMetadata = {
                                 brand: e.target.value,
                             };
                             updateFileMetadata(file.name, newMetadata);
                         }}
+                        autoFocus={false}
                     />
                 </div>
                 <Button
@@ -50,7 +41,7 @@ const UploadCard = ({ file, removeFn, updateFileMetadata }) => {
                     onClickFn={() => {
                         removeFn(file.name);
                     }}
-                    style={{ "align-self": "flex-end" }}
+                    style={{ alignSelf: "flex-end", marginTop: "auto" }}
                 />
             </div>
         </div>

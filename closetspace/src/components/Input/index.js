@@ -1,4 +1,13 @@
-const Input = ({ value, placeholder, size, onInputFn }) => {
+const Input = ({
+    value,
+    placeholder,
+    size,
+    onInputFn,
+    onKeyUpFn,
+    onFocusOutFn,
+    autoFocus = true,
+    style,
+}) => {
     return (
         <input
             onInput={onInputFn}
@@ -6,6 +15,10 @@ const Input = ({ value, placeholder, size, onInputFn }) => {
             placeholder={placeholder}
             value={value}
             className={`input ${size}`}
+            onKeyUp={onKeyUpFn}
+            autoFocus={autoFocus}
+            onBlur={onFocusOutFn}
+            style={style}
         />
     );
 };

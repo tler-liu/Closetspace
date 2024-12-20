@@ -36,7 +36,7 @@ function App() {
             <SideNav
                 navItems={[
                     { label: "All", linkTo: "/" },
-                    { label: "Upload", linkTo: "/upload" },
+                    { label: "Add to Closet", linkTo: "/upload" },
                 ]}
             />
             <Routes>
