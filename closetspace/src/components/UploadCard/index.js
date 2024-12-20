@@ -1,36 +1,48 @@
+import Button from "../Button";
+import Input from "../Input";
+
 const UploadCard = ({ file, removeFn, updateFileMetadata }) => {
     return (
         <div className="upload-card-wrapper">
             <div className="image-box">
                 <img src={file.preview} />
-                <button
-                    className="remove-btn"
-                    onClick={() => {
-                        removeFn(file.name);
-                    }}
-                >
-                    Remove
-                </button>
             </div>
-
             <div className="fields-container">
                 <div>
                     <label className="input-label">Name</label>
-                    <input
-                        className="text-input"
+                    <Input
                         placeholder="Name..."
-                        onInput={(e) => {
+                        onInputFn={(e) => {
                             let newMetadata = {
                                 display_name: e.target.value,
                             };
                             updateFileMetadata(file.name, newMetadata);
                         }}
+                        autoFocus={false}
                     />
                 </div>
                 <div>
                     <label className="input-label">Brand</label>
-                    <input className="text-input" placeholder="Brand..." />
+                    <Input
+                        placeholder="Brand..."
+                        onInputFn={(e) => {
+                            let newMetadata = {
+                                brand: e.target.value,
+                            };
+                            updateFileMetadata(file.name, newMetadata);
+                        }}
+                        autoFocus={false}
+                    />
                 </div>
+                <Button
+                    label="Remove"
+                    variant="destroy"
+                    size="medium"
+                    onClickFn={() => {
+                        removeFn(file.name);
+                    }}
+                    style={{ alignSelf: "flex-end", marginTop: "auto" }}
+                />
             </div>
         </div>
     );

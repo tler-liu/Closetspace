@@ -11,6 +11,7 @@ import Upload from "./pages/Upload";
 import { Route, Routes } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./config/firestore";
+import Item from "./pages/Item";
 
 function App() {
     const [clothingItems, setClothingItems] = useState(null);
@@ -20,7 +21,7 @@ function App() {
 
         let newItems = [];
         querySnapshot.forEach((doc) => {
-            newItems.push(doc.data());
+            newItems.push({ ...doc.data(), id: doc.id });
         });
 
         setClothingItems(newItems);
@@ -35,7 +36,7 @@ function App() {
             <SideNav
                 navItems={[
                     { label: "All", linkTo: "/" },
-                    { label: "Upload", linkTo: "/upload" },
+                    { label: "Add to Closet", linkTo: "/upload" },
                 ]}
             />
             <Routes>
@@ -46,6 +47,15 @@ function App() {
                 <Route
                     path="/upload"
                     element={<Upload getClothingItems={getClothingItems} />}
+                />
+                <Route
+                    path="/item/:id"
+                    element={
+                        <Item
+                            clothingItems={clothingItems}
+                            getClothingItems={getClothingItems}
+                        />
+                    }
                 />
             </Routes>
         </div>

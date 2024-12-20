@@ -1,0 +1,22 @@
+.button {
+    font-family: Inter, sans-serif;
+    // width: fit-content;
+
+    &.medium {
+        padding: 14px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+    }
+
+    &.destroy {
+        background-color: #ff6a6a;
+        border: none;
+
+        &:hover {
+            background-color: #ff5555;
+            cursor: pointer;
+        }
+    }
+}

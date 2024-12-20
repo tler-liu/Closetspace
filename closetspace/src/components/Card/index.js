@@ -1,9 +1,13 @@
-const Card = ({ label, path }) => {
+import { Link } from "react-router-dom";
+
+const Card = ({ label, path, id }) => {
     return (
-        <div className="card-wrapper">
-            <img src={path} alt="no-img" className="card-img" />
-            {label}
-        </div>
+        <Link to={`/item/${id}`}>
+            <div className="card-wrapper">
+                <img src={path} alt="no-img" className="card-img" />
+                {label}
+            </div>
+        </Link>
     );
 };
 

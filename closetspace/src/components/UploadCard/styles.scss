@@ -10,8 +10,11 @@
     border-radius: 6px;
 
     img {
-        height: 130px;
-        width: 110px;
+        // height: 130px;
+        // width: 110px;
+        height: 180px;
+        aspect-ratio: 1/1;
+
         object-fit: cover;
     }
 
@@ -21,16 +24,6 @@
         gap: 12px;
         width: 100%;
         box-sizing: border-box;
-    }
-
-    .text-input {
-        border: 1px solid gray;
-        border-radius: 6px;
-        width: 100%;
-        box-sizing: border-box;
-        outline: none;
-        height: 32px;
-        padding: 8px;
     }
 
     .input-label {
