@@ -61,7 +61,7 @@ const Dropzone = ({ className, getClothingItems }) => {
             }).then((res) => res.json());
 
             const { secure_url, public_id } = data;
-            const docRef = await addDoc(collection(db, "clothing_items"), {
+            const docRef = await addDoc(collection(db, process.env.REACT_APP_COLLECTION_NAME), {
                 name: file.display_name || "",
                 secure_url: secure_url,
                 public_id: public_id,

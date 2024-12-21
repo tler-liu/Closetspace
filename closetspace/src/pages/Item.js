@@ -48,7 +48,7 @@ const Item = ({ clothingItems = [], getClothingItems }) => {
 
             console.log("response", response);
 
-            await deleteDoc(doc(db, "clothing_items", id));
+            await deleteDoc(doc(db, process.env.REACT_APP_COLLECTION_NAME, id));
         } catch (error) {
             console.log(error);
         }
@@ -67,7 +67,7 @@ const Item = ({ clothingItems = [], getClothingItems }) => {
                 break;
         }
         try {
-            await setDoc(doc(db, "clothing_items", id), {
+            await setDoc(doc(db, process.env.REACT_APP_COLLECTION_NAME, id), {
                 ...newData,
             });
             getClothingItems();
