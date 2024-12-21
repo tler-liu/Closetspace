@@ -1,16 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import UploadCard from "../UploadCard";
-import Upload from "../../pages/Upload";
-import { Image } from "cloudinary-react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../config/firestore";
+import Button from "../Button";
 
 const Dropzone = ({ className, getClothingItems }) => {
     const [files, setFiles] = useState([]);
-    const [rejected, setRejected] = useState([]);
 
-    const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+    const onDrop = useCallback((acceptedFiles) => {
         if (acceptedFiles?.length) {
             setFiles((previousFiles) => [
                 ...previousFiles,
@@ -19,20 +17,12 @@ const Dropzone = ({ className, getClothingItems }) => {
                 ),
             ]);
         }
-
-        if (rejectedFiles?.length) {
-            setRejected((previousFiles) => [
-                ...previousFiles,
-                ...rejectedFiles,
-            ]);
-        }
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         accept: {
             "image/*": [],
         },
-        // maxSize: 1024 * 1000,
         onDrop,
     });
 
@@ -47,7 +37,6 @@ const Dropzone = ({ className, getClothingItems }) => {
 
     const removeAll = () => {
         setFiles([]);
-        setRejected([]);
     };
 
     const updateFileMetadata = (fileName, newData) => {
@@ -72,7 +61,7 @@ const Dropzone = ({ className, getClothingItems }) => {
             }).then((res) => res.json());
 
             const { secure_url, public_id } = data;
-            const docRef = await addDoc(collection(db, "clothing_items"), {
+            const docRef = await addDoc(collection(db, process.env.REACT_APP_COLLECTION_NAME), {
                 name: file.display_name || "",
                 secure_url: secure_url,
                 public_id: public_id,
@@ -92,7 +81,6 @@ const Dropzone = ({ className, getClothingItems }) => {
 
         const uploadPromises = files.map((file) => uploadFile(file));
         const results = await Promise.all(uploadPromises);
-        console.log(results);
 
         getClothingItems();
         removeAll();
@@ -129,9 +117,14 @@ const Dropzone = ({ className, getClothingItems }) => {
                     );
                 })}
             </div>
-            <button className="upload-btn" onClick={handleSubmit}>{`Upload ${
-                files.length
-            } item${files.length == 1 ? "" : "s"}`}</button>
+            <Button
+                label={`Upload ${files.length} item${
+                    files.length == 1 ? "" : "s"
+                }`}
+                size="medium"
+                variant="create"
+                onClickFn={handleSubmit}
+            />
         </div>
     );
 };

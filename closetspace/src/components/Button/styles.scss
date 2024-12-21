@@ -19,4 +19,16 @@
             cursor: pointer;
         }
     }
+
+    &.create {
+        background-color: #222222;
+        border: none;
+        color: white;
+
+        &:hover {
+            background-color: #000000;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    }
 }

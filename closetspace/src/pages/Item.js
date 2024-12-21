@@ -10,10 +10,7 @@ import { useState } from "react";
 const Item = ({ clothingItems = [], getClothingItems }) => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [editingBrand, setEditingBrand] = useState(false);
-    const [brandVal, setBrandVal] = useState();
-    const [editingName, setEditingName] = useState(false);
-    const [nameVal, setNameVal] = useState();
+
     let entry = null;
 
     clothingItems?.forEach((item) => {
@@ -22,26 +19,36 @@ const Item = ({ clothingItems = [], getClothingItems }) => {
         }
     });
 
-    if (entry === null) {
-        return "";
-    }
+    const {
+        secure_url,
+        name,
+        public_id,
+        brand = "Not specified",
+    } = entry || {};
 
-    const { secure_url, name, public_id, brand = "Not specified" } = entry;
+    const [fields, setFields] = useState({
+        name: name,
+        brand: brand,
+    });
+    const [editing, setEditing] = useState({
+        name: false,
+        brand: false,
+    });
 
     const removeItem = async () => {
-        // const formData = new FormData();
-        // formData.append("public_id", public_id);
-
-        // const URL = process.env.REACT_APP_CLOUDINARY_URL_DESTROY;
         try {
             // TODO: delete image from cloudinary DB
+            const response = await fetch("/deleteItem", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ public_id: public_id }),
+            });
 
-            // const data = await fetch(URL, {
-            //     method: "POST",
-            //     body: formData,
-            // }).then((res) => res.json());
+            console.log("response", response);
 
-            await deleteDoc(doc(db, "clothing_items", id));
+            await deleteDoc(doc(db, process.env.REACT_APP_COLLECTION_NAME, id));
         } catch (error) {
             console.log(error);
         }
@@ -53,14 +60,14 @@ const Item = ({ clothingItems = [], getClothingItems }) => {
         let newData = { ...entry };
         switch (field) {
             case "name":
-                newData = { ...newData, name: nameVal };
+                newData = { ...newData, name: fields.name };
                 break;
             case "brand":
-                newData = { ...newData, brand: brandVal };
+                newData = { ...newData, brand: fields.brand };
                 break;
         }
         try {
-            await setDoc(doc(db, "clothing_items", id), {
+            await setDoc(doc(db, process.env.REACT_APP_COLLECTION_NAME, id), {
                 ...newData,
             });
             getClothingItems();
@@ -69,72 +76,98 @@ const Item = ({ clothingItems = [], getClothingItems }) => {
         }
     };
 
+    const handleSetField = async (fieldName, newVal) => {
+        setFields({
+            ...fields,
+            [fieldName]: newVal,
+        });
+    };
+
+    const handleChangeEditing = async (fieldName, newVal) => {
+        setEditing({
+            ...editing,
+            [fieldName]: newVal,
+        });
+    };
+
+    if (entry === null) {
+        return "";
+    }
+
     return (
         <div className="item-page">
             <img src={secure_url} className="item-image" />
             <div className="item-details">
                 <div className="item-fields">
-                    {editingName ? (
+                    {editing.name ? (
                         <Input
                             placeholder="Name..."
-                            value={nameVal}
+                            value={fields.name}
                             onInputFn={(e) => {
-                                setNameVal(e.target.value);
+                                handleSetField("name", e.target.value);
                             }}
                             onKeyUpFn={(e) => {
                                 if (e.key === "Enter") {
                                     // updateDoc and fetchData
                                     updateItem("name");
-                                    setEditingName(!editingName);
+                                    handleChangeEditing("name", !editing.name);
                                 } else if (e.key === "Escape") {
-                                    setEditingName(!editingName);
+                                    handleChangeEditing("name", !editing.name);
                                 }
                             }}
-                            onFocusOutFn={() => {
-                                setEditingName(!editingName);
+                            onFocusOutFn={(e) => {
+                                handleChangeEditing("name", !editing.name);
                             }}
                             style={{
                                 fontSize: "32px",
                                 fontWeight: "600",
                                 padding: "12px",
                             }}
+                            name="name"
                         />
                     ) : (
                         <h1
                             onDoubleClick={() => {
-                                setEditingName(!editingName);
-                                setNameVal(name);
+                                handleChangeEditing("name", !editing.name);
+                                handleSetField("name", name);
                             }}
                         >
                             {name}
                         </h1>
                     )}
-                    {editingBrand ? (
+                    {editing.brand ? (
                         <Input
                             placeholder="Brand..."
-                            value={brandVal}
+                            value={fields.brand}
                             onInputFn={(e) => {
-                                setBrandVal(e.target.value);
+                                handleSetField("brand", e.target.value);
                             }}
                             onKeyUpFn={(e) => {
                                 if (e.key === "Enter") {
                                     // updateDoc and fetchData
                                     updateItem("brand");
-                                    setEditingBrand(!editingBrand);
+                                    handleChangeEditing(
+                                        "brand",
+                                        !editing.brand
+                                    );
                                 } else if (e.key === "Escape") {
-                                    setEditingBrand(!editingBrand);
+                                    handleChangeEditing(
+                                        "brand",
+                                        !editing.brand
+                                    );
                                 }
                             }}
                             onFocusOutFn={() => {
-                                setEditingBrand(!editingBrand);
+                                handleChangeEditing("brand", !editing.brand);
                             }}
                             style={{ fontSize: "16px", padding: "12px" }}
+                            name="brand"
                         />
                     ) : (
                         <p
                             onDoubleClick={() => {
-                                setEditingBrand(!editingBrand);
-                                setBrandVal(brand);
+                                handleChangeEditing("brand", !editing.brand);
+                                handleSetField("brand", brand);
                             }}
                         >{`Brand: ${brand}`}</p>
                     )}

@@ -8,10 +8,10 @@ const UploadCard = ({ file, removeFn, updateFileMetadata }) => {
                 <img src={file.preview} />
             </div>
             <div className="fields-container">
-                <div>
+                <div className="field-wrapper">
                     <label className="input-label">Name</label>
                     <Input
-                        placeholder="Name..."
+                        placeholder="ex: Wide Leg Sweatpants..."
                         onInputFn={(e) => {
                             let newMetadata = {
                                 display_name: e.target.value,
@@ -21,10 +21,10 @@ const UploadCard = ({ file, removeFn, updateFileMetadata }) => {
                         autoFocus={false}
                     />
                 </div>
-                <div>
+                <div className="field-wrapper">
                     <label className="input-label">Brand</label>
                     <Input
-                        placeholder="Brand..."
+                        placeholder="ex: Nike, Ralph Lauren..."
                         onInputFn={(e) => {
                             let newMetadata = {
                                 brand: e.target.value,
