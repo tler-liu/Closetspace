@@ -1,5 +1,4 @@
 import NavItem from "./components/NavItem";
-import { useState } from "react";
 
 const SideNav = ({ navItems }) => {
     return (

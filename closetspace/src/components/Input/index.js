@@ -7,6 +7,7 @@ const Input = ({
     onFocusOutFn,
     autoFocus = true,
     style,
+    name,
 }) => {
     return (
         <input
@@ -20,6 +21,7 @@ const Input = ({
             onBlur={onFocusOutFn}
             style={style}
             spellCheck={false}
+            name={name}
         />
     );
 };

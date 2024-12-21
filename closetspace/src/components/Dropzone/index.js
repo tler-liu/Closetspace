@@ -7,9 +7,8 @@ import Button from "../Button";
 
 const Dropzone = ({ className, getClothingItems }) => {
     const [files, setFiles] = useState([]);
-    const [rejected, setRejected] = useState([]);
 
-    const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+    const onDrop = useCallback((acceptedFiles) => {
         if (acceptedFiles?.length) {
             setFiles((previousFiles) => [
                 ...previousFiles,
@@ -18,20 +17,12 @@ const Dropzone = ({ className, getClothingItems }) => {
                 ),
             ]);
         }
-
-        if (rejectedFiles?.length) {
-            setRejected((previousFiles) => [
-                ...previousFiles,
-                ...rejectedFiles,
-            ]);
-        }
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         accept: {
             "image/*": [],
         },
-        // maxSize: 1024 * 1000,
         onDrop,
     });
 
@@ -46,7 +37,6 @@ const Dropzone = ({ className, getClothingItems }) => {
 
     const removeAll = () => {
         setFiles([]);
-        setRejected([]);
     };
 
     const updateFileMetadata = (fileName, newData) => {
@@ -91,7 +81,6 @@ const Dropzone = ({ className, getClothingItems }) => {
 
         const uploadPromises = files.map((file) => uploadFile(file));
         const results = await Promise.all(uploadPromises);
-        console.log(results);
 
         getClothingItems();
         removeAll();
