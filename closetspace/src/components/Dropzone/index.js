@@ -44,7 +44,6 @@ const Dropzone = ({ className, getClothingItems }) => {
             const updateFiles = prevFiles.map((file) =>
                 file.name === fileName ? Object.assign(file, newData) : file
             );
-            console.log(updateFiles);
             return updateFiles;
         });
     };

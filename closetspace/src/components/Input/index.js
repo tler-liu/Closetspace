@@ -22,6 +22,7 @@ const Input = ({
             style={style}
             spellCheck={false}
             name={name}
+            autoComplete="off"
         />
     );
 };
