@@ -25,4 +25,4 @@ yarn-error.log*
 
 /recommender/fashion-dataset
 /recommender/.ipynb_checkpoints
-.npy
+recommender/lat_rep_fd_nft.npy
