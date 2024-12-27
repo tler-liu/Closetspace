@@ -1,0 +1,7 @@
+tshirt = 'https://www.nordstrom.com/sr?origin=keywordsearch&keyword=tshirt'
+pants = 'https://www.nordstrom.com/sr?origin=keywordsearch&keyword=pants'
+jackets = 'https://www.nordstrom.com/sr?origin=keywordsearch&keyword=jacket'
+hoodies = 'https://www.nordstrom.com/sr?origin=keywordsearch&keyword=hoodies'
+shoes = 'https://www.nordstrom.com/sr?origin=keywordsearch&keyword=shoes'
+fragrance = 'https://www.nordstrom.com/sr?origin=keywordsearch&keyword=fragrance'
+shorts = 'https://www.nordstrom.com/sr?origin=keywordsearch&keyword=shorts'

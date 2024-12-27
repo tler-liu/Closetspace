@@ -26,3 +26,6 @@ yarn-error.log*
 /recommender/fashion-dataset
 /recommender/.ipynb_checkpoints
 recommender/lat_rep_fd_nft.npy
+recommender/lat_rep_fd_ft.npy
+recommender/nordstrom-data/images
+recommender/*.pth
