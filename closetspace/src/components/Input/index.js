@@ -8,11 +8,11 @@ const Input = ({
     autoFocus = true,
     style,
     name,
+    type = "text",
 }) => {
     return (
         <input
             onInput={onInputFn}
-            type="text"
             placeholder={placeholder}
             value={value}
             className={`input ${size}`}
@@ -23,6 +23,7 @@ const Input = ({
             spellCheck={false}
             name={name}
             autoComplete="off"
+            type={type}
         />
     );
 };

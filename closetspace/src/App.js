@@ -9,6 +9,7 @@ import { db } from "./config/firestore";
 import Item from "./pages/Item";
 import Recommender from "./pages/Recommender";
 import { sideNavItems } from "./config/sideNav";
+import Login from "./pages/Login";
 
 function App() {
     const [clothingItems, setClothingItems] = useState(null);
@@ -56,6 +57,7 @@ function App() {
                         />
                     }
                 />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </div>
     );
