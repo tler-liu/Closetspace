@@ -1,11 +1,11 @@
 import Card from "../Card";
 
-const CardGrid = ({ cards }) => {
+const CardGrid = ({ cards, linkable = true }) => {
     return (
         <div className="cardgrid-wrapper">
-            {cards.map(({ name, secure_url, id }) => {
+            {cards.map(({ name, secure_url = null, id = null, src = null, brand = "" }) => {
                 return (
-                    <Card key={name} label={name} path={secure_url} id={id} />
+                    <Card key={secure_url || src} label={name} brand={brand} path={secure_url || src} id={id} linkable={linkable}/>
                 );
             })}
         </div>
