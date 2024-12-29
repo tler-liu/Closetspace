@@ -30,6 +30,9 @@ npm i
 npm run start
 ```
 
+> [!NOTE]
+> Both the client and server run on localhost. The server should run on port 5001 and the client should run on port 3000.
+
 ## 💡 Motivation
 Many people, myself included, are interested in fashion and dressing to impress. The high prices of clothing in today's economy combined with the overwhelming number of clothing options and retailers, however, has made me regret many of the purchases I've made in the past. A good fashion recommender system can filter out the bad purchases and help you be more intentional about where your money goes. 
 
