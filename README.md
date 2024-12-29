@@ -4,7 +4,7 @@ A content-based recommender system that provides personalized fashion recommenda
 
 ## Table of Contents
 
-- About
+- [About](#About)
 - Installation and Usage
 - Motivation
 - Methodology
