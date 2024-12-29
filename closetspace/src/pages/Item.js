@@ -37,8 +37,9 @@ const Item = ({ clothingItems = [], getClothingItems }) => {
 
     const removeItem = async () => {
         try {
-            // TODO: delete image from cloudinary DB
-            const response = await fetch("/deleteItem", {
+            const API_BASE_URL = process.env.REACT_APP_API_URL || '';
+
+            const response = await fetch(`${API_BASE_URL}/deleteItem`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
