@@ -15,6 +15,21 @@ Closetspace is a wardrobe management app designed to help users build and mainta
 
 ## 📝 Installation and Usage
 
+Running the client
+```console
+cd closetspace
+serve -s build -l 3000
+```
+
+
+Running the server
+```console
+cd server
+pip install -r requirements.txt
+npm i
+npm run start
+```
+
 ## 💡 Motivation
 Many people, myself included, are interested in fashion and dressing to impress. The high prices of clothing in today's economy combined with the overwhelming number of clothing options and retailers, however, has made me regret many of the purchases I've made in the past. A good fashion recommender system can filter out the bad purchases and help you be more intentional about where your money goes. 
 
