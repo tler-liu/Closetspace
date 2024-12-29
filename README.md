@@ -31,7 +31,7 @@ Closetspace's recommender system was built with these flaws in mind.
 ![Block Diagram](images/block_diagram.jpeg)
 
 
-Closetspace uses a purely content-based approach to making recommendations. The setup is that we have an inventory dataset (~7000 items scraped from [Nordstrom](https://www.nordstrom.com/)) from which recommendations can be drawn from and as input we take a user dataset with all items from a user's closet. Each item consists of two parts, the image of the item and metadata about the item, including the item name and brand. We use neural nets to embed both the image and metadata for all items into a smaller dimensional space which aims to capture the important latent information about an item. On a high level, items which are similar should have embeddings that are similar. Therefore, a natural approach to making recommendations, which we adopt, is to recommend items that have a similar embedding to items within a user's wardrobe. To capture information about a user's wardrobe as a whole instead of just individual items, we recommend items that have an embedding close to the mean embedding of all items in a user's wardrobe. 
+Closetspace uses a purely content-based approach to making recommendations. The setup is that we have an inventory dataset (~3000 unique products, ~7000 images scraped from [Nordstrom](https://www.nordstrom.com/)) from which recommendations can be drawn from and as input we take a user dataset with all items from a user's closet. Each item consists of two parts, the image of the item and metadata about the item, including the item name and brand. We use neural nets to embed both the image and metadata for all items into a smaller dimensional space which aims to capture the important latent information about an item. On a high level, items which are similar should have embeddings that are similar. Therefore, a natural approach to making recommendations, which we adopt, is to recommend items that have a similar embedding to items within a user's wardrobe. To capture information about a user's wardrobe as a whole instead of just individual items, we recommend items that have an embedding close to the mean embedding of all items in a user's wardrobe. 
 
 
 To embed images into a lower dimensional space, we initially start with a pretrained [ResNet50](https://arxiv.org/pdf/1512.03385) model provided by PyTorch and removed the fully connected layer at the end used for classification. To make this model more suited to creating good embeddings for fashion items, we trained the model by treating it as an encoder and pairing it with a simple decoder, and optimizing for reconstruction loss. This is because good embeddings should be ones that can be fed through a decoder and reproduce the original image. We freeze the first 3 layers of the ResNet50 model during training to keep the learned information of its pretrained parameters. We used a [fashion dataset on kaggle](https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-dataset) with ~44k images for training. 
@@ -43,3 +43,15 @@ To embed the metadata, we simply fed the metadata through a [pretrained SBERT](h
 > When making recommendations, we introduce a bit of gaussian noise to the inventory embeddings to make the recommendations non-deterministic. This is just so that a user can keep refreshing the page for additional recommendations.
 
 ## Results
+
+#### Sample Wardrobe
+![Sample Wardrobe](images/sample_wardrobe.jpg)
+
+#### Sample Recommendations
+![Sample Recommendations](images/sample_recommendations.jpg)
+
+
+Currently, the model is good at providing recommendations with high serendipity which still fall in line with the general aesthetic of the input wardrobe. However, there are some unanswered questions and areas for future improvement.
+1. The model does not know the difference between a shirt and a pant and a shoe. Taking the mean latent representation of all items in an input wardrobe could lead to a meaningless value, a mix of a shirt and a pant and a shoe. How do we come up with a better representation? Should we partition items and recommendations into these predefined categories of product type? Doing so could lose some information.
+2. The model similarly does not know the gender of the user or the gender of products. It would be easy to filter out inventory items by gender but should we? Some clothes are unisex and some people prefer the fit of clothing from the opposite sex (e.g. boyfriend hoodies and dad jeans)
+3. A technical problem the model faces is finding a balance between the importance of the image vs. the metadata. Currently, the metadata embedding is quite large, but it does not capture much information because product names are quite abstract (what is the meaning of Dior Sauvage?).
