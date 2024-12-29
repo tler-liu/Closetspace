@@ -4,21 +4,31 @@ import { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import Upload from "./pages/Upload";
 import { Route, Routes } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "./config/firestore";
 import Item from "./pages/Item";
 import Recommender from "./pages/Recommender";
 import { sideNavItems } from "./config/sideNav";
 import Login from "./pages/Login";
+import { AuthProvider } from "./contexts/AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
+import { useAuth } from "./contexts/AuthContext";
 
 function App() {
     const [clothingItems, setClothingItems] = useState(null);
+    const { currentUser } = useAuth();
 
     const getClothingItems = async () => {
+        if (!currentUser) {
+            return;
+        }
+
         try {
-            const querySnapshot = await getDocs(
-                collection(db, process.env.REACT_APP_COLLECTION_NAME)
+            const q = query(
+                collection(db, process.env.REACT_APP_COLLECTION_NAME),
+                where("uid", "==", currentUser.uid)
             );
+            const querySnapshot = await getDocs(q);
 
             let newItems = [];
             querySnapshot.forEach((doc) => {
@@ -33,7 +43,7 @@ function App() {
 
     useEffect(() => {
         getClothingItems();
-    }, []);
+    }, [currentUser]);
 
     return (
         <div className="App">
@@ -41,20 +51,37 @@ function App() {
             <Routes>
                 <Route
                     path="/"
-                    element={<Home files={clothingItems || []} />}
+                    element={
+                        <PrivateRoute>
+                            <Home files={clothingItems || []} />
+                        </PrivateRoute>
+                    }
                 />
-                <Route path="/explore" element={<Recommender />} />
+                <Route
+                    path="/explore"
+                    element={
+                        <PrivateRoute>
+                            <Recommender />
+                        </PrivateRoute>
+                    }
+                />
                 <Route
                     path="/upload"
-                    element={<Upload getClothingItems={getClothingItems} />}
+                    element={
+                        <PrivateRoute>
+                            <Upload getClothingItems={getClothingItems} />
+                        </PrivateRoute>
+                    }
                 />
                 <Route
                     path="/item/:id"
                     element={
-                        <Item
-                            clothingItems={clothingItems}
-                            getClothingItems={getClothingItems}
-                        />
+                        <PrivateRoute>
+                            <Item
+                                clothingItems={clothingItems}
+                                getClothingItems={getClothingItems}
+                            />
+                        </PrivateRoute>
                     }
                 />
                 <Route path="/login" element={<Login />} />

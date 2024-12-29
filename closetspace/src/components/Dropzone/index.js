@@ -4,9 +4,11 @@ import UploadCard from "../UploadCard";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../config/firestore";
 import Button from "../Button";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Dropzone = ({ className, getClothingItems }) => {
     const [files, setFiles] = useState([]);
+    const { currentUser } = useAuth();
 
     const onDrop = useCallback((acceptedFiles) => {
         if (acceptedFiles?.length) {
@@ -60,12 +62,16 @@ const Dropzone = ({ className, getClothingItems }) => {
             }).then((res) => res.json());
 
             const { secure_url, public_id } = data;
-            const docRef = await addDoc(collection(db, process.env.REACT_APP_COLLECTION_NAME), {
-                name: file.display_name || "",
-                secure_url: secure_url,
-                public_id: public_id,
-                brand: file.brand || "",
-            });
+            const docRef = await addDoc(
+                collection(db, process.env.REACT_APP_COLLECTION_NAME),
+                {
+                    name: file.display_name || "",
+                    secure_url: secure_url,
+                    public_id: public_id,
+                    brand: file.brand || "",
+                    uid: currentUser.uid,
+                }
+            );
 
             return data;
         } catch (error) {
