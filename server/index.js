@@ -1,8 +1,19 @@
 const express = require("express");
+const cors = require("cors");
 require("dotenv").config();
 const cloudinary = require("cloudinary");
 const app = express();
 app.use(express.json());
+
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true, // Include this if you're using cookies or authorization headers
+    })
+);
+
+app.options("*", cors()); // Allow preflight requests for all routes
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -42,33 +53,33 @@ app.post("/deleteItem", async (req, res) => {
 app.post("/recommendItems", async (req, res) => {
     const { documents } = req.body;
     const wardrobeJson = JSON.stringify(documents);
-    
-    const { spawn } = require('child_process');
-    const pythonProcess = spawn('python', ['recommender.py']);
 
-    let stdout = '';
-    let stderr = '';
+    const { spawn } = require("child_process");
+    const pythonProcess = spawn("python", ["recommender.py"]);
+
+    let stdout = "";
+    let stderr = "";
 
     // Send data to the Python process's stdin
     pythonProcess.stdin.write(wardrobeJson);
     pythonProcess.stdin.end();
 
     // Capture stdout
-    pythonProcess.stdout.on('data', (data) => {
+    pythonProcess.stdout.on("data", (data) => {
         stdout += data.toString();
     });
 
     // Capture stderr
-    pythonProcess.stderr.on('data', (data) => {
+    pythonProcess.stderr.on("data", (data) => {
         stderr += data.toString();
     });
 
     // Handle process exit
-    pythonProcess.on('close', (code) => {
+    pythonProcess.on("close", (code) => {
         if (code !== 0) {
             console.error(`Python process exited with code ${code}`);
             console.error(`stderr: ${stderr}`);
-            return res.status(500).json({ error: 'Internal Server Error' });
+            return res.status(500).json({ error: "Internal Server Error" });
         }
 
         // Parse the JSON output
@@ -78,7 +89,7 @@ app.post("/recommendItems", async (req, res) => {
             res.status(200).json({ recommendations });
         } catch (parseError) {
             console.error("Failed to parse JSON:", parseError);
-            res.status(500).json({ error: 'Failed to parse recommendations' });
+            res.status(500).json({ error: "Failed to parse recommendations" });
         }
     });
 });
