@@ -18,6 +18,7 @@ Closetspace is a wardrobe management app designed to help users build and mainta
 Running the client
 ```console
 cd closetspace
+npm install serve -g
 serve -s build -l 3000
 ```
 
