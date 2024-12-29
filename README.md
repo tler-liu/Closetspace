@@ -10,12 +10,12 @@ A content-based recommender system that provides personalized fashion recommenda
 - [Methodology](#Methodology)
 - [Results](#Results)
 
-## About
+## 📚 About
 Closetspace is a wardrobe management app designed to help users build and maintain an intentional wardrobe that enhances their personal style. Users can upload images of their clothing items and view their entire wardrobe in a modern UI. The app analyzes the user's wardrobe content using machine learning to offer personalized recommendations that complement the user's style. By leveraging modern neural nets, Closetspace can pick up on nuances in a user's fashion choices while avoiding the need to collect tons of user data, which traditional recommender systems using collaborative filtering techniques fail to achieve in the fashion context. 
 
-## Installation and Usage
+## 📝 Installation and Usage
 
-## Motivation
+## 💡 Motivation
 Many people, myself included, are interested in fashion and dressing to impress. The high prices of clothing in today's economy combined with the overwhelming number of clothing options and retailers, however, has made me regret many of the purchases I've made in the past. A good fashion recommender system can filter out the bad purchases and help you be more intentional about where your money goes. 
 
 
@@ -27,7 +27,7 @@ Existing systems have some notable flaws.
 
 Closetspace's recommender system was built with these flaws in mind.
 
-## Methodology
+## 📊 Methodology
 ![Block Diagram](images/block_diagram.jpeg)
 
 
@@ -42,7 +42,7 @@ To embed the metadata, we simply fed the metadata through a [pretrained SBERT](h
 > [!IMPORTANT]
 > When making recommendations, we introduce a bit of gaussian noise to the inventory embeddings to make the recommendations non-deterministic. This is just so that a user can keep refreshing the page for additional recommendations.
 
-## Results
+## 🎯 Results
 
 #### Sample Wardrobe
 ![Sample Wardrobe](images/sample_wardrobe.jpg)
