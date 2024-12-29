@@ -26,22 +26,27 @@ const Login = ({}) => {
         switch (err) {
             case "auth/invalid-email":
                 msg = isLogin
-                    ? "User with email does not exist"
-                    : "Not a valid email";
+                    ? "User with email does not exist."
+                    : "Please enter a valid email.";
                 break;
             case "auth/invalid-credential":
-                msg = "These credentials don't match any user";
+                msg = "These credentials don't match any user.";
                 break;
             case "auth/weak-password":
-                msg = "Please enter a stronger password";
+                msg = "Please enter a stronger password.";
                 break;
+            default:
+                msg = "An unexpected error occured. Please try again."
         }
+        setError(msg);
     };
 
     const handleSubmit = async () => {
         if (!email || !password) {
             return;
         }
+
+        setError("")
 
         if (isLogin) {
             try {
@@ -50,6 +55,7 @@ const Login = ({}) => {
                 navigate("/");
             } catch (error) {
                 console.log(error.code);
+                handleError(error.code);
             }
         } else {
             // is SignUp
@@ -59,6 +65,7 @@ const Login = ({}) => {
                 navigate("/");
             } catch (error) {
                 console.log(error.code);
+                handleError(error.code);
             }
         }
 
@@ -101,6 +108,7 @@ const Login = ({}) => {
                     onClickFn={handleSubmit}
                     disabled={loading}
                 />
+                <p className="error-msg-login">{error ? error : ""}</p>
             </div>
         </div>
     );

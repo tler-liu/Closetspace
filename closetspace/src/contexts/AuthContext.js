@@ -17,12 +17,20 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
 
-    function signup(email, password) {
-        return createUserWithEmailAndPassword(auth, email, password);
+    async function signup(email, password) {
+        // return createUserWithEmailAndPassword(auth, email, password);
+        return createUserWithEmailAndPassword(auth, email, password).catch((error) => {
+            // Re-throw the error to be handled at the top level
+            throw error;
+        });
     }
 
-    function login(email, password) {
-        return signInWithEmailAndPassword(auth, email, password);
+    async function login(email, password) {
+        // return signInWithEmailAndPassword(auth, email, password);
+        return signInWithEmailAndPassword(auth, email, password).catch((error) => {
+            // Re-throw the error to be handled at the top level
+            throw error;
+        });
     }
 
     function logout() {
