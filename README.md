@@ -28,5 +28,6 @@ Existing systems have some notable flaws.
 Closetspace's recommender system was built with these flaws in mind.
 
 ## Methodology
+![Block Diagram](images/block_diagram.jpeg)
 
 ## Results
