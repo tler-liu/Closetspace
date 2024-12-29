@@ -7,9 +7,11 @@ import { useAuth } from "../contexts/AuthContext";
 
 const Recommender = ({}) => {
     const [recommendations, setRecommendations] = useState(null);
+    const [error, setError] = useState("");
     const { currentUser } = useAuth();
 
     const getRecommendations = async () => {
+        setError("");
         try {
             const q = query(
                 collection(db, process.env.REACT_APP_COLLECTION_NAME),
@@ -27,6 +29,7 @@ const Recommender = ({}) => {
 
             // TODO: let user know to upload items first
             if (newItems.length == 0) {
+                setError("Please upload items to your wardrobe first!");
                 return;
             }
 
@@ -55,6 +58,10 @@ const Recommender = ({}) => {
     useEffect(() => {
         getRecommendations();
     }, [currentUser]);
+
+    if (error) {
+        return <div className="loader-wrapper">{error}</div>;
+    }
 
     return recommendations ? (
         <CardGrid cards={recommendations || []} linkable={false} />
