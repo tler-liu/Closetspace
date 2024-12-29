@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const SideNav = ({ navItems }) => {
-    const { logout } = useAuth();
+    const { logout, currentUser } = useAuth();
     const navigate = useNavigate();
 
     async function handleLogout() {
@@ -25,7 +25,16 @@ const SideNav = ({ navItems }) => {
                     />
                 );
             })}
-            <Button label="Log out" variant="destroy" size="medium" onClickFn={handleLogout} style={{"marginTop": "auto"}}/>
+            <div className="profile">
+                <div className="user">{currentUser ? currentUser.email : ""}</div>
+                <Button
+                    label="Log out"
+                    variant="create"
+                    size="medium"
+                    onClickFn={handleLogout}
+                    style={{ width: "100%" }}
+                />
+            </div>
         </div>
     );
 };
