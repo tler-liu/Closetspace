@@ -15,6 +15,8 @@ Closetspace is a wardrobe management app designed to help users build and mainta
 
 ## 📝 Installation and Usage
 
+Installation: fork the repository ([git docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) found here)
+
 Running the client
 ```console
 cd closetspace
