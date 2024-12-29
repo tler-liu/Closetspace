@@ -39,6 +39,7 @@ To embed images into a lower dimensional space, we initially start with a pretra
 
 To embed the metadata, we simply fed the metadata through a [pretrained SBERT](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2). Then to produce a final embedding that takes into account both the image and metadata, we simply concatenated the image embedding with the metadata embedding. Lastly, we use the [approximate nearest neighbors oh yeah algorithm (ANNOY)](https://sds-aau.github.io/M3Port19/portfolio/ann/) with a euclidean distance metric to efficiently find similar embeddings and return recommendations.
 
-**IMPORTANT**: when making recommendations, we introduce a bit of gaussian noise to the inventory embeddings to make the recommendations nondeterministic. This is just so that a user can keep refreshing the page for additional recommendations.
+> [!IMPORTANT]
+> When making recommendations, we introduce a bit of gaussian noise to the inventory embeddings to make the recommendations non-deterministic. This is just so that a user can keep refreshing the page for additional recommendations.
 
 ## Results
