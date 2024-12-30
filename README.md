@@ -9,6 +9,7 @@ A content-based recommender system that provides personalized fashion recommenda
 - [Motivation](#-Motivation)
 - [Methodology](#-Methodology)
 - [Results](#-Results)
+- [Built With](#-Built-With)
 
 ## 📚 About
 Closetspace is a wardrobe management app designed to help users build and maintain an intentional wardrobe that enhances their personal style. Users can upload images of their clothing items and view their entire wardrobe in a modern UI, all of which is saved using Google Firebase and cloud storage. The app analyzes the user's wardrobe content using machine learning to offer personalized recommendations that complement the user's style. By leveraging modern neural nets, Closetspace can pick up on nuances in a user's fashion choices while avoiding the need to collect tons of user data, which traditional recommender systems using collaborative filtering techniques fail to achieve in the fashion context. 
@@ -76,3 +77,15 @@ Currently, the model is good at providing recommendations with high serendipity 
 1. The model does not know the difference between a shirt and a pant and a shoe. Taking the mean latent representation of all items in an input wardrobe could lead to a meaningless value, a mix of a shirt and a pant and a shoe. How do we come up with a better representation? Should we partition items and recommendations into these predefined categories of product type? Doing so could lose some information.
 2. The model similarly does not know the gender of the user or the gender of products. It would be easy to filter out inventory items by gender but should we? Some clothes are unisex and some people prefer the fit of clothing from the opposite sex (e.g. boyfriend hoodies and dad jeans).
 3. A technical problem the model faces is finding a balance between the importance of the image vs. the metadata. Currently, the metadata embedding is quite large, but it does not capture much information because product names are quite abstract (what is the meaning of Dior Sauvage?).
+
+## 🛠️ Built With
+
+- [React.js](https://react.dev/): A popular front-end JavaScript library used to build dynamic UI for web apps
+- [Express.js](https://expressjs.com/): A web application framework for Node.js used to build backend APIs and write server-side code
+- [Google Firebase (Firestore database & Authentication)](https://firebase.google.com/): A platform that provides services to apps including a NoSQL database and user authentication
+- [Cloudinary](https://cloudinary.com/): A cloud-based platform used to store and transform media assets
+- [PyTorch](https://pytorch.org/): A popular open-source machine learning library used to build and train complex neural networks efficiently 
+- [SentenceTransformers](https://sbert.net/): A python module for building state-of-the-art text embedding models
+- [ANNOY](https://sds-aau.github.io/M3Port19/portfolio/ann/): A python module for performing the ANNOY algorithm
+- [NumPy](https://numpy.org/): A powerful python library used for its data manipulation and computing capabilities
+- [ScrapFly](https://scrapfly.io/): An advanced web scrapping platform used for its anti-bot bypassing ability
