@@ -78,7 +78,7 @@ Currently, the model is good at providing recommendations with high serendipity 
 2. The model similarly does not know the gender of the user or the gender of products. It would be easy to filter out inventory items by gender but should we? Some clothes are unisex and some people prefer the fit of clothing from the opposite sex (e.g. boyfriend hoodies and dad jeans).
 3. A technical problem the model faces is finding a balance between the importance of the image vs. the metadata. Currently, the metadata embedding is quite large, but it does not capture much information because product names are quite abstract (what is the meaning of Dior Sauvage?).
 
-## 🛠️ Built With
+## 🔨 Built With
 
 - [React.js](https://react.dev/): A popular front-end JavaScript library used to build dynamic UI for web apps
 - [Express.js](https://expressjs.com/): A web application framework for Node.js used to build backend APIs and write server-side code
