@@ -9,7 +9,7 @@ A content-based recommender system that provides personalized fashion recommenda
 - [Motivation](#-Motivation)
 - [Methodology](#-Methodology)
 - [Results](#-Results)
-- [Built With](#-Built-With)
+- [Built With](#built-with)
 
 ## 📚 About
 Closetspace is a wardrobe management app designed to help users build and maintain an intentional wardrobe that enhances their personal style. Users can upload images of their clothing items and view their entire wardrobe in a modern UI, all of which is saved using Google Firebase and cloud storage. The app analyzes the user's wardrobe content using machine learning to offer personalized recommendations that complement the user's style. By leveraging modern neural nets, Closetspace can pick up on nuances in a user's fashion choices while avoiding the need to collect tons of user data, which traditional recommender systems using collaborative filtering techniques fail to achieve in the fashion context. 
@@ -78,7 +78,7 @@ Currently, the model is good at providing recommendations with high serendipity 
 2. The model similarly does not know the gender of the user or the gender of products. It would be easy to filter out inventory items by gender but should we? Some clothes are unisex and some people prefer the fit of clothing from the opposite sex (e.g. boyfriend hoodies and dad jeans).
 3. A technical problem the model faces is finding a balance between the importance of the image vs. the metadata. Currently, the metadata embedding is quite large, but it does not capture much information because product names are quite abstract (what is the meaning of Dior Sauvage?).
 
-## 🛠️ Built With
+## 🛠️ Built With {#built-with}
 
 - [React.js](https://react.dev/): A popular front-end JavaScript library used to build dynamic UI for web apps
 - [Express.js](https://expressjs.com/): A web application framework for Node.js used to build backend APIs and write server-side code
